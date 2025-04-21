@@ -1,0 +1,16 @@
+{
+  "name": "nimble-chat",
+  "packageManager": "yarn@4.9.1",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
