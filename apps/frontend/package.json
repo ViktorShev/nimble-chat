@@ -1,12 +1,14 @@
 {
-  "name": "frontend",
+  "name": "@local/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "yarn lint --fix",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "next": "15.3.1",

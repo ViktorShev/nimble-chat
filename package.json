@@ -3,6 +3,8 @@
   "packageManager": "yarn@4.9.1",
   "private": true,
   "scripts": {
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
     "dev": "turbo run dev",
     "typecheck": "turbo run typecheck"
   },

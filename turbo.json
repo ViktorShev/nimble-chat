@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
+  "ui": "stream",
   "tasks": {
     "typecheck": {
       "dependsOn": ["^typecheck"],
@@ -10,6 +10,16 @@
     "dev": {
       "persistent": true,
       "cache": false
+    },
+    "lint": {
+      "dependsOn": ["^lint"],
+      "persistent": false,
+      "cache": true
+    },
+    "lint:fix": {
+      "dependsOn": ["^lint:fix"],
+      "persistent": false,
+      "cache": true
     }
   }
 }

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "incremental": true,                              
+    "tsBuildInfoFile": "./node_modules/ts-build-cache/.tsbuildinfo",
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  }
+}
