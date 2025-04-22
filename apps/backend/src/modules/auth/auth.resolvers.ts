@@ -19,7 +19,6 @@ export const resolvers: IResolvers = {
 
         ctx.res.cookie('jwt', token, {
           httpOnly: true,
-          secure: true,
           expires: new Date(Date.now() + 1 * 60 * 60 * 1000), 
         })
 
@@ -39,7 +38,6 @@ export const resolvers: IResolvers = {
 
         ctx.res.cookie('jwt', token, {
           httpOnly: true,
-          secure: true,
           expires: new Date(Date.now() + 1 * 60 * 60 * 1000), 
         })
 
