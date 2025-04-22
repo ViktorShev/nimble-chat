@@ -1,7 +1,7 @@
 import type { IResolvers } from '@graphql-tools/utils'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { JWT_SECRET, SALT_ROUNDS } from '~/constants.js'
+import { env } from '~/env.js'
 import { User } from '~/service-providers/db/entities/user.js'
 import { resolver } from '~/service-providers/graphql/resolver.js'
 
@@ -15,7 +15,7 @@ export const resolvers: IResolvers = {
         const hashMatches = await bcrypt.compare(password, user.password)
         if (!hashMatches) throw new Error('Invalid password')
 
-        const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' })
+        const token = jwt.sign({ userId: user.id }, env.JWT_SECRET, { expiresIn: '1h' })
 
         return { jwt: token }
       }, 
@@ -26,10 +26,10 @@ export const resolvers: IResolvers = {
         const existingUser = await User.findOne({ where: { username } })
         if (existingUser) throw new Error('Username is taken')
 
-        const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
+        const hashedPassword = await bcrypt.hash(password, env.SALT_ROUNDS)
         const user = await User.create({ username, password: hashedPassword }).save()
 
-        const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' })
+        const token = jwt.sign({ userId: user.id }, env.JWT_SECRET, { expiresIn: '1h' })
 
         return { jwt: token }
       }, 

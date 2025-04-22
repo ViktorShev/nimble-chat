@@ -1,7 +1,7 @@
 import type { expressMiddleware } from '@apollo/server/express4'
 import jwt from 'jsonwebtoken'
 import type { JWTPayload } from '~/common/types.js'
-import { JWT_SECRET } from '~/constants.js'
+import { env } from '~/env.js'
 import { User } from '../db/entities/user.js'
 
 export const injectCurrentUser: Parameters<typeof expressMiddleware>[1]['context'] = async ({ req }) => {
@@ -18,7 +18,7 @@ export const injectCurrentUser: Parameters<typeof expressMiddleware>[1]['context
   const token = authHeader.slice(7)
 
   try {
-    const payload = jwt.verify(token, JWT_SECRET) as JWTPayload
+    const payload = jwt.verify(token, env.JWT_SECRET) as JWTPayload
     const user = await User.findOne({ where: { id: payload.userId } })
 
     if (!user) {

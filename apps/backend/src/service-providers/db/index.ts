@@ -1,18 +1,18 @@
 import { DataSource } from 'typeorm'
-import { DB_CONFIG } from '~/constants.js'
+import { env } from '~/env.js'
 import { Message } from './entities/message.js'
 import { User } from './entities/user.js'
 
 export const db = new DataSource({
   type: 'postgres',
-  host: DB_CONFIG.host,
-  port: DB_CONFIG.port,
-  username: DB_CONFIG.username,
-  password: DB_CONFIG.password,
-  database: DB_CONFIG.database,
+  host: env.DB_HOST,
+  port: env.DB_PORT,
+  username: env.DB_USERNAME,
+  password: env.DB_PASSWORD,
+  database: env.DB_NAME,
   entities: [User, Message],
-  synchronize: process.env.NODE_ENV !== 'production',
-  logging: process.env.NODE_ENV !== 'production',
+  synchronize: env.NODE_ENV !== 'production',
+  logging: env.NODE_ENV !== 'production',
 })
 
 export async function initializeDB () {
