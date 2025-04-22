@@ -5,33 +5,33 @@ import globals from 'globals'
 import tseslint, { parser } from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['**/dist/', '.yarn/', 'docker/'] },
+  { ignores: ['**/dist/', '.yarn/'] },
   { 
-    files: ['src/**/*.{js,mjs,cjs,ts}'],
+    files: ['src/**/*.{js,mjs,cjs,ts}', './eslint.config.js'],
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
     ],
     languageOptions: { 
       globals: globals.node,
-      parser
+      parser,
     },
     plugins: {
       '@stylistic/ts': stylisticTS,
-      '@stylistic/js': stylisticJS
+      '@stylistic/js': stylisticJS,
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-unused-vars': ['error', {
-          args: 'all',
-          argsIgnorePattern: '^_',
-          caughtErrors: 'all',
-          caughtErrorsIgnorePattern: '^_',
-          destructuredArrayIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          ignoreRestSiblings: true
-        }
+        args: 'all',
+        argsIgnorePattern: '^_',
+        caughtErrors: 'all',
+        caughtErrorsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        ignoreRestSiblings: true,
+      },
       ],
       '@typescript-eslint/consistent-type-imports': 'error',
       '@stylistic/ts/object-curly-spacing': ['error', 'always'],
@@ -46,12 +46,12 @@ export default tseslint.config(
       '@stylistic/ts/padding-line-between-statements': [
         'error', 
         { blankLine: 'always', prev: '*', next: 'return' },
-        { blankLine: 'never', prev: 'function-overload', 'next': 'function' }
+        { blankLine: 'never', prev: 'function-overload', 'next': 'function' },
       ],
       '@stylistic/js/arrow-spacing': 'error',
       '@stylistic/js/switch-colon-spacing': 'error',
-      "@stylistic/js/space-in-parens": ["error", "never"],
-      "@stylistic/js/indent": ["error", 2]
-    }
-  }
+      '@stylistic/js/space-in-parens': ['error', 'never'],
+      '@stylistic/js/indent': ['error', 2],
+    },
+  },
 )
