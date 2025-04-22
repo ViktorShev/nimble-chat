@@ -1,13 +1,19 @@
+import 'reflect-metadata'
+
 import { expressMiddleware } from '@apollo/server/express4'
 import cors from 'cors'
 import express from 'express'
 import { createServer } from 'http'
 import { ALLOWED_CORS_ORIGINS, PORT } from '~/constants.js'
+import { initializeDB } from '~/service-providers/db/index.js'
+import { injectCurrentUser } from '~/service-providers/graphql/context.js'
 import { createGraphQLServer } from '~/service-providers/graphql/create-server.js'
 
 const startTime = Date.now()
 
 async function startServer () {
+  await initializeDB()
+
   const app = express()
   const httpServer = createServer(app)
   const graphqlServer = await createGraphQLServer(httpServer, '/graphql')
@@ -20,7 +26,7 @@ async function startServer () {
     express.json(),
     express.urlencoded({ extended: true }),
     // @ts-expect-error -- Non-critical type error
-    expressMiddleware(graphqlServer),
+    expressMiddleware(graphqlServer, { context: injectCurrentUser }),
   )
 
   await new Promise<void>((resolve) =>

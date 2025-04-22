@@ -6,11 +6,14 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "allowJs": true,
     "esModuleInterop": true,
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "noImplicitAny": true,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
@@ -18,6 +21,7 @@
     "noUncheckedIndexedAccess": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
+    "lib": ["es6"],
     "types": ["node"],
     "paths": {
       "~/*": ["./src/*"]

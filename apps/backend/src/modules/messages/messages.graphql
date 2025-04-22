@@ -1,7 +1,7 @@
 type Message {
   id: ID!
   content: String!
-  createdBy: User!
+  author: User!
   createdAt: DateTime!
 }
 
