@@ -5,6 +5,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema'
 import { useServer } from 'graphql-ws/use/ws'
 import type { Server } from 'http'
 import { WebSocketServer } from 'ws'
+import { env } from '~/env.js'
 import { apolloWsServerDisposePlugin } from './plugins/apollo-ws-server-dispose.js'
 
 export async function createGraphQLServer (httpServer: Server, gqlPath: string = '/graphql') {
@@ -21,7 +22,7 @@ export async function createGraphQLServer (httpServer: Server, gqlPath: string =
   
   const graphqlServer = new ApolloServer({
     schema,
-    introspection: process.env.NODE_ENV !== 'production',
+    introspection: env.NODE_ENV !== 'production',
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       apolloWsServerDisposePlugin(wsServerCleanup),
