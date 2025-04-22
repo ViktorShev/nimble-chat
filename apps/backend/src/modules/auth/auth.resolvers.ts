@@ -20,7 +20,7 @@ export const resolvers: IResolvers = {
         ctx.res.cookie('jwt', token, {
           httpOnly: true,
           secure: true,
-          expires: new Date(Date.now() + 24 * 60 * 60 * 1000), 
+          expires: new Date(Date.now() + 1 * 60 * 60 * 1000), 
         })
 
         return { jwt: token }
@@ -28,7 +28,7 @@ export const resolvers: IResolvers = {
       true,
     ),
     signUp: resolver<{ username: string, password: string }>(
-      async (_parent, { username, password }) => {
+      async (_parent, { username, password }, ctx) => {
         const existingUser = await User.findOne({ where: { username } })
         if (existingUser) throw new Error('Username is taken')
 
@@ -36,6 +36,12 @@ export const resolvers: IResolvers = {
         const user = await User.create({ username, password: hashedPassword }).save()
 
         const token = jwt.sign({ userId: user.id }, env.JWT_SECRET, { expiresIn: '1h' })
+
+        ctx.res.cookie('jwt', token, {
+          httpOnly: true,
+          secure: true,
+          expires: new Date(Date.now() + 1 * 60 * 60 * 1000), 
+        })
 
         return { jwt: token }
       }, 
