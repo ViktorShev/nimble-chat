@@ -6,7 +6,7 @@ import express from 'express'
 import { createServer } from 'http'
 import { env } from '~/env.js'
 import { initializeDB } from '~/service-providers/db/index.js'
-import { injectCurrentUser } from '~/service-providers/graphql/context.js'
+import { injectContext } from '~/service-providers/graphql/context.js'
 import { createGraphQLServer } from '~/service-providers/graphql/create-server.js'
 
 const startTime = Date.now()
@@ -22,11 +22,11 @@ async function startServer () {
 
   app.use(
     '/graphql',
-    cors({ origin: env.ALLOWED_CORS_ORIGINS_REGEX }),
+    cors({ origin: env.ALLOWED_CORS_ORIGINS_REGEX, credentials: true }),
     express.json(),
     express.urlencoded({ extended: true }),
     // @ts-expect-error -- Non-critical type error
-    expressMiddleware(graphqlServer, { context: injectCurrentUser }),
+    expressMiddleware(graphqlServer, { context: injectContext }),
   )
 
   await new Promise<void>((resolve) =>

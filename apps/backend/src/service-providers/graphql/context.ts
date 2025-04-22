@@ -4,15 +4,15 @@ import type { JWTPayload } from '~/common/types.js'
 import { env } from '~/env.js'
 import { User } from '../db/entities/user.js'
 
-export const injectCurrentUser: Parameters<typeof expressMiddleware>[1]['context'] = async ({ req }) => {
+export const injectContext: Parameters<typeof expressMiddleware>[1]['context'] = async ({ req, res }) => {
   const authHeader = req.headers.authorization
 
   if (!authHeader) {
-    return { user: null }
+    return { user: null, res }
   }
 
   if (!authHeader.startsWith('Bearer ')) {
-    return { user: null }
+    return { user: null, res }
   }
 
   const token = authHeader.slice(7)
@@ -22,11 +22,11 @@ export const injectCurrentUser: Parameters<typeof expressMiddleware>[1]['context
     const user = await User.findOne({ where: { id: payload.userId } })
 
     if (!user) {
-      return { user: null }
+      return { user: null, res }
     }
 
-    return { user }
+    return { user, res }
   } catch {
-    return { user: null }
+    return { user: null, res }
   }
 }

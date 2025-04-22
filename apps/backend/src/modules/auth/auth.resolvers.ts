@@ -8,7 +8,7 @@ import { resolver } from '~/service-providers/graphql/resolver.js'
 export const resolvers: IResolvers = {
   Mutation: {
     logIn: resolver<{ username: string, password: string }>(
-      async (_parent, { username, password }) => {
+      async (_parent, { username, password }, ctx) => {
         const user = await User.findOne({ where: { username } })
         if (!user) throw new Error('User not found')
 
@@ -16,6 +16,12 @@ export const resolvers: IResolvers = {
         if (!hashMatches) throw new Error('Invalid password')
 
         const token = jwt.sign({ userId: user.id }, env.JWT_SECRET, { expiresIn: '1h' })
+
+        ctx.res.cookie('jwt', token, {
+          httpOnly: true,
+          secure: true,
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000), 
+        })
 
         return { jwt: token }
       }, 

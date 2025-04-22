@@ -1,3 +1,4 @@
+import type { Response } from 'express'
 import { GraphQLError, type GraphQLResolveInfo } from 'graphql'
 
 export interface User {
@@ -27,6 +28,7 @@ export type DefaultArgs = Record<string, any>
 
 export interface DefaultContext {
   user: User
+  res: Response
 }
 
 export function resolver<TArgs extends DefaultArgs = DefaultArgs, TParent extends DefaultParent = DefaultParent, TContext extends DefaultContext = DefaultContext, TReturn = any> (
